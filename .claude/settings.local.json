@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(printf \"y\\\\n\")",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)",
+      "Bash(git init:*)",
+      "Bash(git:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
