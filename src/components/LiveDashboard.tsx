@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
-import type { Player, Prize, ClaimedLine } from '../types'
+import type { Player, Prize } from '../types'
 import styles from './LiveDashboard.module.css'
 
 interface PlayerProgress {
@@ -13,7 +13,6 @@ interface PlayerProgress {
 export default function LiveDashboard() {
   const [players, setPlayers] = useState<PlayerProgress[]>([])
   const [prizes, setPrizes] = useState<Prize[]>([])
-  const [gridSize, setGridSize] = useState(4)
 
   useEffect(() => {
     loadData()
@@ -29,9 +28,6 @@ export default function LiveDashboard() {
   }, [])
 
   async function loadData() {
-    const { data: config } = await supabase.from('config').select('*').single()
-    if (config) setGridSize(config.grid_size)
-
     const { data: playersData } = await supabase
       .from('players')
       .select('*')

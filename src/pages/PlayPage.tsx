@@ -18,7 +18,6 @@ export default function PlayPage() {
   const [loading, setLoading] = useState(true)
   const [showWheel, setShowWheel] = useState(false)
   const [showCongrats, setShowCongrats] = useState(false)
-  const [wonPrizeName, setWonPrizeName] = useState<string | null>(null)
   const [availablePrizes, setAvailablePrizes] = useState<string[]>([])
   const [winningIndex, setWinningIndex] = useState(0)
 
@@ -97,7 +96,6 @@ export default function PlayPage() {
       const isFirst = currentClaimedLines.length === 0
 
       let prizeId: string | null = null
-      let prizeName: string | null = null
 
       if (isFirst) {
         const { data: allAvailable } = await supabase
@@ -116,7 +114,6 @@ export default function PlayPage() {
             .is('won_by', null)
 
           prizeId = prize.id
-          prizeName = prize.name
 
           setAvailablePrizes(allAvailable.map((p: any) => p.name))
           setWinningIndex(randomIdx)
@@ -141,7 +138,6 @@ export default function PlayPage() {
       }
 
       if (isFirst) {
-        setWonPrizeName(prizeName)
         setShowWheel(true)
       } else {
         setShowCongrats(true)
