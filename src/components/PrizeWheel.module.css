@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pointer {
+  font-size: 2rem;
+  color: #dc2626;
+  z-index: 1;
+  margin-bottom: -0.5rem;
+}
+
+.wheel {
+  width: 280px;
+  height: 280px;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #333;
+}
+
+.result {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.prizeName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4f46e5;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #4338ca;
+}

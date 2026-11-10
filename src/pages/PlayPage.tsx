@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import { findCompletedLines, type CellGrid } from '../utils/bingoDetection'
 import BingoGrid from '../components/BingoGrid'
+import PrizeWheel from '../components/PrizeWheel'
 import type { Player, CardCell, ClaimedLine } from '../types'
 import styles from './PlayPage.module.css'
 
@@ -17,6 +18,8 @@ export default function PlayPage() {
   const [showWheel, setShowWheel] = useState(false)
   const [showCongrats, setShowCongrats] = useState(false)
   const [wonPrizeName, setWonPrizeName] = useState<string | null>(null)
+  const [availablePrizes, setAvailablePrizes] = useState<string[]>([])
+  const [winningIndex, setWinningIndex] = useState(0)
 
   useEffect(() => {
     const token = localStorage.getItem('playerToken')
@@ -96,21 +99,26 @@ export default function PlayPage() {
       let prizeName: string | null = null
 
       if (isFirst) {
-        const { data: prize } = await supabase
+        const { data: allAvailable } = await supabase
           .from('prizes')
           .select('*')
           .is('won_by', null)
-          .limit(1)
-          .single()
 
-        if (prize) {
+        if (allAvailable && allAvailable.length > 0) {
+          const randomIdx = Math.floor(Math.random() * allAvailable.length)
+          const prize = allAvailable[randomIdx]
+
           await supabase
             .from('prizes')
             .update({ won_by: currentPlayer.id })
             .eq('id', prize.id)
             .is('won_by', null)
+
           prizeId = prize.id
           prizeName = prize.name
+
+          setAvailablePrizes(allAvailable.map((p: any) => p.name))
+          setWinningIndex(randomIdx)
         }
       }
 
@@ -170,20 +178,15 @@ export default function PlayPage() {
         onMarkComplete={handleMarkComplete}
       />
 
-      {showWheel && (
+      {showWheel && availablePrizes.length > 0 && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <div>🎉 БІНГО!</div>
-            <p>Ви виграли приз! Крутіть колесо...</p>
-            {wonPrizeName && (
-              <p className={styles.prizeName}>{wonPrizeName}</p>
-            )}
-            <button
-              className={styles.modalButton}
-              onClick={() => setShowWheel(false)}
-            >
-              Закрити
-            </button>
+            <h2>🎉 БІНГО!</h2>
+            <PrizeWheel
+              prizes={availablePrizes}
+              winningIndex={winningIndex}
+              onFinished={() => setShowWheel(false)}
+            />
           </div>
         </div>
       )}
