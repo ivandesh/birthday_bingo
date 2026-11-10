@@ -4,6 +4,7 @@ import { supabase } from '../supabaseClient'
 import { findCompletedLines, type CellGrid } from '../utils/bingoDetection'
 import BingoGrid from '../components/BingoGrid'
 import PrizeWheel from '../components/PrizeWheel'
+import CongratsScreen from '../components/CongratsScreen'
 import type { Player, CardCell, ClaimedLine } from '../types'
 import styles from './PlayPage.module.css'
 
@@ -194,14 +195,7 @@ export default function PlayPage() {
       {showCongrats && (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <div>🔥 Ще одне БІНГО!</div>
-            <p>Ти просто вогонь!</p>
-            <button
-              className={styles.modalButton}
-              onClick={() => setShowCongrats(false)}
-            >
-              Закрити
-            </button>
+            <CongratsScreen onClose={() => setShowCongrats(false)} />
           </div>
         </div>
       )}

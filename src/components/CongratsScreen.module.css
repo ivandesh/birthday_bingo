@@ -1,0 +1,30 @@
+.container {
+  text-align: center;
+  padding: 1rem;
+}
+
+.emoji {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.container p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.container button {
+  padding: 0.5rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
